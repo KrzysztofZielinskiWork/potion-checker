@@ -45,7 +45,7 @@
         // img.dataset.id = j;
         // field.appendChild(img);
         let divIngridient = document.createElement('div');
-        divIngridient.dataset.id = j;        
+        divIngridient.dataset.id = j;
         divIngridient.classList.add('temporary-solution');
         let text = document.createTextNode(ingridientNames[j]);
         divIngridient.appendChild(text);
@@ -62,7 +62,7 @@
     //if (e.target.nodeName === 'IMG' && active.length < 2) {
     if (e.target.classList.value.includes('temporary-solution') && active.length < 2) {
       e.target.classList.toggle('piramid__elements-active');
-   // } else if (e.target.nodeName === 'IMG' && active.length > 1) {
+      // } else if (e.target.nodeName === 'IMG' && active.length > 1) {
     } else if (e.target.classList.value.includes('temporary-solution') && active.length > 1) {
       e.target.classList.remove('piramid__elements-active');
     }
@@ -107,20 +107,29 @@
     drinkPotionResult(result[2], result[3], result[4], result[1], 'data-elm', alchemonsMatrix)
     gameMemo.push(new testResult(result[2], result[3], result[4], result[1]));
     result[3] === 'neutral' ? neutralMemo.push(new testResult(result[2], result[3], result[4], result[1])) : null;
-   // console.log(gameMemo);
-   // console.log(neutralMemo);
+    // console.log(gameMemo);
+    // console.log(neutralMemo);
     neutralWatcher();
     addToStorage();
     result = [null, null, null, null, null];
-    let but = document.getElementsByClassName('btn__piramide-active');
-    let activeIngridients = document.getElementsByClassName('piramid__elements-active');
-    for (let i = (but.length - 1); i >= 0; i -= 1) {
-      but[i].classList.remove('btn__piramide-active');
-    }
-    for (let i = (activeIngridients.length - 1); i >= 0; i -= 1) {
-      activeIngridients[i].classList.remove('piramid__elements-active');
-    }
+    classNameRemover('btn__piramide-active');
+    classNameRemover('piramid__elements-active');
+    // let but = document.getElementsByClassName('btn__piramide-active');
+    // let activeIngridients = document.getElementsByClassName('piramid__elements-active');
+    // for (let i = (but.length - 1); i >= 0; i -= 1) {
+    //   but[i].classList.remove('btn__piramide-active');
+    // }
+    // for (let i = (activeIngridients.length - 1); i >= 0; i -= 1) {
+    //   activeIngridients[i].classList.remove('piramid__elements-active');
+    // }
   });
+
+  function classNameRemover(name) {
+    let elm = document.getElementsByClassName(name);
+    for (let i = (elm.length - 1); i >= 0; i -= 1) {
+      elm[i].classList.remove(name);
+    }
+  }
 
   let redPlusButton = document.getElementById('red-plus');
   let redMinusButton = document.getElementById('red-minus');
