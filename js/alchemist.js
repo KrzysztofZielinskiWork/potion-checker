@@ -86,7 +86,6 @@
 
   function addToStorage() {
     localStorage.setItem('MixingCounter' + counter, ('color: ' + result[2] + ' sign: ' + result[3]) + ' first: ' + result[4] + ' second: ' + result[1]);
-  //  console.log(localStorage.length);
     counter += 1;
   }
 
@@ -171,7 +170,6 @@
     e.target.classList.toggle('btn__piramide-active')
   };
 
-
   //answer board constructor
   let board = document.getElementsByClassName('answerDivBoard');
   for (let i = 0; i < 8; i += 1) {
@@ -208,7 +206,6 @@
       }
     }
   })
-
 
   // function to test potions
   function drinkPotionResult(color, sign, firstIngr, secondIngr, where, alchemonsMatrix) {

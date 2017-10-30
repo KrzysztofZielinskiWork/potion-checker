@@ -28,15 +28,14 @@ body {
 
 .answerDivBoard {
   background-color: #222020;
-  padding: 2px;
   min-width: 320px;
+  padding: 2px;
   width: 100%;
 }
 
 .answerDivBoard__row {
-  min-width: 42rem;
-  width: 100%;
   text-align: center;
+  width: 100%;
 }
 
 .answerDivBoard__row:nth-child(2n+1) {
@@ -45,11 +44,11 @@ body {
 
 .answerDivBoard__element {
   border-radius: 5px;
+  display: inline-block;
   height: 5rem;
   margin-left: 4px;
   margin-bottom: 5px;
   width: 5rem;
-  display: inline-block;
 }
 
 .answerDivBoard__element .neutral {
@@ -62,24 +61,4 @@ body {
 
 .answerDivBoard .selected {
   background-color: #fc8f00;
-}
-
-#answer-tab {
-  padding: 10px;
-  margin: 10px;
-  margin-left: auto;
-  margin-right: auto;
-  min-width: 42rem;
-  background-color: green;
-}
-
-#answer-tab td {
-  border: 2px solid wheat;
-  width: 5rem;
-  text-align: center;
-  height: 5rem;
-}
-
-#answer-tab #answer-body .row {
-  background-color: white;
 }
