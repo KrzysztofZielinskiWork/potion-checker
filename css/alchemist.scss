@@ -1,0 +1,84 @@
+$mushroom: #833a90;
+$plant: #98c771 ;
+$froog: #754243 ;
+$foot: #cfb924 ;
+$flower: #1779ad ;
+$root: #8a785d ;
+$scorpion: #b1413e ;
+$feather: #404049 ;
+$minus: blue ;
+$plus: red ;
+
+html {
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  @media (max-width: 760px){
+    font-size: 14px;
+  }
+  @media (min-width: 568px) and (max-width: 759px){
+    font-size: 12px;
+  }
+  @media (max-width: 567px){
+    font-size: 7px;
+  }
+}
+
+body {
+  background-color: grey;
+}
+
+// div board answer section
+.answerDivBoard {
+  background-color: #222020;
+  padding: 2px;
+  min-width: 320px;
+  width: 100%;
+&__row {
+  min-width: 42rem;  
+  width: 100%;
+  text-align: center;
+}
+&__row:nth-child(2n+1) {
+  margin-top: 10px;
+}
+ &__element {
+  border-radius: 5px;
+  height: 5rem;
+  margin-left: 4px;
+  margin-bottom: 5px;
+  width: 5rem;
+  display: inline-block;  
+  .neutral {
+    background-color: pink;
+  }
+ }
+ .row {
+  background-color: #fff;
+}
+.selected {
+background-color: #fc8f00;
+}
+}
+
+// Answer table section
+#answer-tab {
+  padding: 10px;
+  margin: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  min-width: 42rem;
+  background-color: green;
+  td {
+    border: 2px solid wheat;
+    width: 5rem;
+    text-align: center;
+    height: 5rem;
+  }
+#answer-body .row {
+  background-color: white;
+}
+
+
+// draft
+}

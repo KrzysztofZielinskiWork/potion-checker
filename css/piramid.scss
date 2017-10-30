@@ -1,0 +1,163 @@
+$mushroom: #833a90;
+$plant: #98c771 ;
+$froog: #754243 ;
+$foot: #cfb924 ;
+$flower: #1779ad ;
+$flower-t: rgba(135, 212, 250, 0.302) ;
+$root: #8a785d ;
+$scorpion: #b1413e ;
+$feather: #404049 ;
+$minus: blue ;
+$plus: red ;
+
+//piramide section
+.piramid {
+  min-width: 320px;
+&__board {
+
+  background-color: #35100E;
+width: 100%;
+min-width: 42rem;
+padding: 2px;
+// min-height: 400px;
+margin-left: auto;
+margin-right: auto;
+text-align: center;
+}
+&__row {
+  box-sizing: border-box;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  &-active:last-child {
+    border: 5px solid $plant;
+  }
+ &:last-child {
+  margin: 10px;
+}
+
+}
+&__elements {
+  @media (max-width: 400px){
+    height: 30px;    
+    width: 30px;
+  }
+  border-radius: 25px;
+  border-right: 0.3rem solid #fff; 
+  display: inline-block;
+  height: 4rem;
+  margin-left: 0.3rem;
+  width: 4rem;
+  img {
+    border-radius: 30px;
+    box-sizing: border-box;
+    max-width: 4rem;
+    max-height: 6rem;
+    width: 100%;
+  }
+  &-active {
+    // border: 2px solid red;
+  border-left: 0.3rem solid rgb(255, 255, 255); 
+  background-color: rgba(255, 255, 255, 0.66);
+  
+  }
+  .temporary-solution {
+    // background-color: red;
+    height: 100%;
+    line-height: 5;
+    width: 100%;
+    border-radius: 25px;
+    text-orientation: vertical;
+  } 
+ }  
+
+}
+
+.btn__group {
+  background-color: #35100E;
+  display: flex;
+  justify-content: center;  
+  min-width: 320px;  
+  padding: 2px;
+  width: 100%;  
+
+}
+  .btn__piramide {
+    // border: 4px solid $plant;
+    // background-color: $plant;
+    border-radius: 1rem;    
+    color: #fff;
+    display: block;
+    font-size: 2em;
+    font-weight: bold;
+    height: 4rem;
+    width: 4rem;
+    margin: 2px;
+  &-red {
+    background-color: red;
+  }
+  &-green {
+    background-color: green;
+  }
+  &-blue {
+    background-color: blue;
+  }
+  &-neutral {
+    background-color: grey;
+  }
+  &-default {
+    border: 2px solid #fff;    
+    color: #000;
+    width: 6rem;
+    font-size: .9em;
+  }
+  &-active {
+    border: 2px solid #fff;
+    border-radius: 50px;
+  }
+  }
+//ingridients
+.mushroom {
+  background-color: #833a90;
+}
+
+.plant {
+  background-color: #98c771;
+}
+
+.froog {
+  background-color: #754243;
+}
+
+.foot {
+  background-color: #cfb924;
+}
+
+.flower {
+  background-color: #1779ad;
+}
+
+.root {
+  background-color: #8a785d;
+}
+
+.scorpion {
+  background-color: #b1413e;
+}
+
+.feather {
+  background-color: #404049;
+}
+
+
+// signs
+.minus {
+  color: #fff;
+  background-color: #fff;
+}
+
+.plus {
+  color: #fff;
+  background-color: #fff;
+}
