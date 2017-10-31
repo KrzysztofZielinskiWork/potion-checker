@@ -51,6 +51,7 @@
 
 .piramid__elements .temporary-solution {
   border-radius: 25px;
+  cursor: pointer;
   height: 100%;
   line-height: 5;
   text-orientation: vertical;
@@ -75,6 +76,7 @@
   height: 4rem;
   width: 4rem;
   margin: 2px;
+  cursor: pointer;
 }
 
 .btn__piramide-red {

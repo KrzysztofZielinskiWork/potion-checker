@@ -1,0 +1,39 @@
+[
+  {
+    "color": "red",
+    "sign": "plus",
+    "label": "+",
+    "onClick": ""
+  },
+  {
+    "color": "red",
+    "sign": "minus",
+    "label": "-"  
+  },
+  {
+    "color": "green",
+    "sign": "plus",
+    "label": "+"
+    
+  },
+  {
+    "color": "green",
+    "sign": "minus",
+    "label": "-"    
+  },
+  {
+    "color": "blue",
+    "sign": "plus",
+    "label": "+"    
+  },
+  {
+    "color": "blue",
+    "sign": "minus",
+    "label": "-"    
+  },
+  {
+    "color": "neutral",
+    "sign": "neutral",
+    "label": "0"    
+  }
+]

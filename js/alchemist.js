@@ -1,5 +1,33 @@
 (function makeBoard() {
 
+  let buttonGroup = document.getElementsByClassName('btn__group');
+  function buttonMaker(sign, color, label) {
+    let button = document.createElement('button');
+    let text = document.createTextNode(label);
+    button.appendChild(text);
+    button.classList.add('btn__piramide');
+    button.classList.add('btn__piramide-' + color);
+    button.id = color + '-' + sign;
+    buttonGroup[0].appendChild(button);
+    button.onclick = (e) => {
+      result[2] = color;
+      result[3] = sign;
+      e.target.classList.toggle('btn__piramide-active')
+    };
+  }
+  
+  fetch('./../data.json').then(response => {
+    if (response.ok) {
+      return response.json();
+    }
+
+  }).then(data => {
+    data.map(el => {
+      buttonMaker(el.sign, el.color, el.label
+    );
+  })
+  });
+  
   let red = ['minus', 'plus', 'plus', 'minus', 'minus', 'plus', 'minus', 'plus'];
   let green = ['plus', 'minus', 'minus', 'plus', 'minus', 'plus', 'minus', 'plus'];
   let blue = ['minus', 'plus', 'minus', 'plus', 'plus', 'minus', 'minus', 'plus'];
@@ -39,11 +67,6 @@
       div.appendChild(field);
       if (i === 7) {
         field.style.height = '6rem';
-        // let img = document.createElement("img");
-        // img.src = './img/' + ingridientNames[j] + '.png';
-        // img.alt = ingridientNames[j];
-        // img.dataset.id = j;
-        // field.appendChild(img);
         let divIngridient = document.createElement('div');
         divIngridient.dataset.id = j;
         divIngridient.classList.add('temporary-solution');
@@ -59,10 +82,8 @@
   let elm = document.querySelectorAll("[data-row='7']");
   elm[0].addEventListener('click', function (e) {
     let active = document.getElementsByClassName('piramid__elements-active');
-    //if (e.target.nodeName === 'IMG' && active.length < 2) {
     if (e.target.classList.value.includes('temporary-solution') && active.length < 2) {
       e.target.classList.toggle('piramid__elements-active');
-      // } else if (e.target.nodeName === 'IMG' && active.length > 1) {
     } else if (e.target.classList.value.includes('temporary-solution') && active.length > 1) {
       e.target.classList.remove('piramid__elements-active');
     }
@@ -107,21 +128,11 @@
     drinkPotionResult(result[2], result[3], result[4], result[1], 'data-elm', alchemonsMatrix)
     gameMemo.push(new testResult(result[2], result[3], result[4], result[1]));
     result[3] === 'neutral' ? neutralMemo.push(new testResult(result[2], result[3], result[4], result[1])) : null;
-    // console.log(gameMemo);
-    // console.log(neutralMemo);
     neutralWatcher();
     addToStorage();
     result = [null, null, null, null, null];
     classNameRemover('btn__piramide-active');
     classNameRemover('piramid__elements-active');
-    // let but = document.getElementsByClassName('btn__piramide-active');
-    // let activeIngridients = document.getElementsByClassName('piramid__elements-active');
-    // for (let i = (but.length - 1); i >= 0; i -= 1) {
-    //   but[i].classList.remove('btn__piramide-active');
-    // }
-    // for (let i = (activeIngridients.length - 1); i >= 0; i -= 1) {
-    //   activeIngridients[i].classList.remove('piramid__elements-active');
-    // }
   });
 
   function classNameRemover(name) {
@@ -131,51 +142,10 @@
     }
   }
 
-  let redPlusButton = document.getElementById('red-plus');
-  let redMinusButton = document.getElementById('red-minus');
-  let greenPlusButton = document.getElementById('green-plus');
-  let greenMinusButton = document.getElementById('green-minus');
-  let bluePlusButton = document.getElementById('blue-plus');
-  let blueMinusButton = document.getElementById('blue-minus');
-  let neutralButton = document.getElementById('neutral');
   let clearButton = document.getElementById('clear');
 
   clearButton.onclick = (e) => {
     localStorage.clear();
-    e.target.classList.toggle('btn__piramide-active')
-  };
-  redPlusButton.onclick = (e) => {
-    result[2] = 'red';
-    result[3] = 'plus';
-    e.target.classList.toggle('btn__piramide-active')
-  };
-  redMinusButton.onclick = (e) => {
-    result[2] = 'red';
-    result[3] = 'minus';
-    e.target.classList.toggle('btn__piramide-active')
-  };
-  greenPlusButton.onclick = (e) => {
-    result[2] = 'green';
-    result[3] = 'plus';
-    e.target.classList.toggle('btn__piramide-active')
-  };
-  greenMinusButton.onclick = (e) => {
-    result[2] = 'green';
-    result[3] = 'minus';
-    e.target.classList.toggle('btn__piramide-active')
-  };
-  bluePlusButton.onclick = (e) => {
-    result[2] = 'blue';
-    result[3] = 'plus';
-    e.target.classList.toggle('btn__piramide-active')
-  };
-  blueMinusButton.onclick = (e) => {
-    result[2] = 'blue';
-    result[3] = 'minus';
-    e.target.classList.toggle('btn__piramide-active')
-  };
-  neutralButton.onclick = (e) => {
-    result[3] = 'neutral';
     e.target.classList.toggle('btn__piramide-active')
   };
 
