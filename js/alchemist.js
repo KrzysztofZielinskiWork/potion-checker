@@ -15,7 +15,7 @@
       e.target.classList.toggle('btn__piramide-active')
     };
   }
-  
+
   fetch('./../data.json').then(response => {
     if (response.ok) {
       return response.json();
@@ -24,10 +24,10 @@
   }).then(data => {
     data.map(el => {
       buttonMaker(el.sign, el.color, el.label
-    );
-  })
+      );
+    })
   });
-  
+
   let red = ['minus', 'plus', 'plus', 'minus', 'minus', 'plus', 'minus', 'plus'];
   let green = ['plus', 'minus', 'minus', 'plus', 'minus', 'plus', 'minus', 'plus'];
   let blue = ['minus', 'plus', 'minus', 'plus', 'plus', 'minus', 'minus', 'plus'];
@@ -110,8 +110,14 @@
     counter += 1;
   }
 
+    // load game from local storage
+    function loadFromLocalStorage() {
+      console.log(localStorage);
+    }
+
   let button = document.getElementById('confirm');
 
+//<-- TO DO --> make reusable function to mark drink result on piramide board
   button.addEventListener('click', function () {
     let rowId = result[0];
     let lowerRowId = result[1];
@@ -143,10 +149,20 @@
   }
 
   let clearButton = document.getElementById('clear');
+  let loadFromLocalStorageButton = document.getElementById('load');
 
   clearButton.onclick = (e) => {
     localStorage.clear();
     e.target.classList.toggle('btn__piramide-active')
+  };
+
+  loadFromLocalStorageButton.onclick = (e) => {
+    let arr = [];
+    for (let i = 0; i < localStorage.length; i += 1) {
+      arr.push(localStorage.getItem('MixingCounter' + i).split(' '));
+      drinkPotionResult(arr[i][1],arr[i][3],arr[i][5],arr[i][7], 'data-elm', alchemonsMatrix);
+    }
+    // add functon to mark result on piramide
   };
 
   //answer board constructor
@@ -173,7 +189,7 @@
     }
   }
 
-  // click on div:row mark all div row and set background to white;
+  // click on div:row mark all div row and set background to white - marks horizontaly
   board[0].addEventListener('click', function (e) {
     e.preventDefault();
     if (e.target.parentElement.classList == 'answerDivBoard__row') {
@@ -182,6 +198,10 @@
       target.classList.toggle('selected');
       for (let i = 0; i < rowIndex.childNodes.length; i += 1) {
         rowIndex.childNodes[i].classList.toggle('row');
+      }; // eliminates other options for selected ingridient - marks verticaly
+      let allMarkedDataElm = document.querySelectorAll("[data-elm='" + target.dataset.elm + "']");
+      for (let j = 0; j < allMarkedDataElm.length; j += 1) {
+        allMarkedDataElm[j].classList.toggle('minus');
       }
     }
   })
