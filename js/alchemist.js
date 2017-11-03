@@ -16,7 +16,11 @@
     };
   }
 
-  fetch('./../data.json').then(response => {
+  // fetch('./../data.json').then(response => {
+  //   if (response.ok) {
+  //     return response.json();
+  //   }
+  fetch('https://krzysztofzielinskiwork.github.io/potion-checker/data.json').then(response => {
     if (response.ok) {
       return response.json();
     }
