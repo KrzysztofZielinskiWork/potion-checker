@@ -139,6 +139,7 @@
       img.src = "./img/" + color + sign + ".png";
     }
     let hitElement = hitTargetRow[0].children[lowerRowId];
+    hitElement.children.length !== 0 ? null : 
     hitElement.appendChild(img);
   }
 
@@ -214,7 +215,7 @@
       }; // eliminates other options for selected ingridient - marks verticaly
       let allMarkedDataElm = document.querySelectorAll("[data-elm='" + target.dataset.elm + "']");
       for (let j = 0; j < allMarkedDataElm.length; j += 1) {
-        allMarkedDataElm[j].classList.toggle('row');
+        allMarkedDataElm[j].classList.toggle('column');
       }
     }
   })

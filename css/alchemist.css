@@ -60,6 +60,10 @@ body {
   background-color: #fff;
 }
 
+.answerDivBoard .column {
+  background-color: #fff;
+}
+
 .answerDivBoard .selected {
   background-color: #fc8f00;
 }
