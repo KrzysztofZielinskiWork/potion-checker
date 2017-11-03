@@ -171,8 +171,11 @@
   };
 
   loadFromLocalStorageButton.onclick = (e) => {
+    let activeClass = document.getElementsByClassName('active');
+   if (activeClass.length == 0) {
     loadFromLocalStorage();
     loadFromLocalStorageButton.disabled = true;
+   }
   };
 
   //answer board constructor
