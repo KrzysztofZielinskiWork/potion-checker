@@ -172,6 +172,7 @@
 
   loadFromLocalStorageButton.onclick = (e) => {
     loadFromLocalStorage();
+    loadFromLocalStorageButton.disabled = true;
   };
 
   //answer board constructor
