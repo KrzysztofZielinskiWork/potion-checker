@@ -103,21 +103,28 @@
   });
 
   // local storage entries counter
-  let counter = 0;
+  let counter = localStorage.length;
 
   function addToStorage() {
     localStorage.setItem('MixingCounter' + counter, ('color: ' + result[2] + ' sign: ' + result[3]) + ' first: ' + result[4] + ' second: ' + result[1]);
     counter += 1;
   }
 
-    // load game from local storage
-    function loadFromLocalStorage() {
-      console.log(localStorage);
+  // load game from local storage
+  // <-- TODO --> neutral watcher don't work on load
+  function loadFromLocalStorage() {
+    let arr = [];
+    for (let i = 0; i < localStorage.length; i += 1) {
+      arr.push(localStorage.getItem('MixingCounter' + i).split(' '));
+      drinkPotionResult(arr[i][1], arr[i][3], arr[i][5], arr[i][7], 'data-elm', alchemonsMatrix);
     }
+    // add functon to mark result on piramide
+
+  }
 
   let button = document.getElementById('confirm');
 
-//<-- TO DO --> make reusable function to mark drink result on piramide board
+  //<-- TO DO --> make reusable function to mark drink result on piramide board
   button.addEventListener('click', function () {
     let rowId = result[0];
     let lowerRowId = result[1];
@@ -153,16 +160,12 @@
 
   clearButton.onclick = (e) => {
     localStorage.clear();
-    e.target.classList.toggle('btn__piramide-active')
+    counter = 0;
+    // e.target.classList.toggle('btn__piramide-active')
   };
 
   loadFromLocalStorageButton.onclick = (e) => {
-    let arr = [];
-    for (let i = 0; i < localStorage.length; i += 1) {
-      arr.push(localStorage.getItem('MixingCounter' + i).split(' '));
-      drinkPotionResult(arr[i][1],arr[i][3],arr[i][5],arr[i][7], 'data-elm', alchemonsMatrix);
-    }
-    // add functon to mark result on piramide
+    loadFromLocalStorage();
   };
 
   //answer board constructor
