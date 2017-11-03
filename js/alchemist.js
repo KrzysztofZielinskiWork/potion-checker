@@ -119,28 +119,27 @@
       drinkPotionResult(arr[i][1], arr[i][3], arr[i][5], arr[i][7], 'data-elm', alchemonsMatrix);
       arr[i][3] === 'neutral' ? neutralMemo.push(new testResult(arr[i][1], arr[i][3], arr[i][5], arr[i][7])) : null;
       neutralWatcher();
-      marksOnPiramide(arr[i][9], arr[i][7], arr[i][3],arr[i][1])
+      marksOnPiramide(arr[i][9], arr[i][7], arr[i][3], arr[i][1])
     }
   }
 
   let button = document.getElementById('confirm');
 
-    function marksOnPiramide(rowId, lowerRowId, sign, color) {
-      let hitTargetRow = document.querySelectorAll("[data-row='" + (7 - rowId) + "']");
-      let img = document.createElement("img");
-      img.classList.add('sign');
-      if (sign === 'neutral') {
-        img.src = "./img/" + sign + ".png";
-      } else {
-        img.src = "./img/" + color + sign + ".png";
-      }
-      let hitElement = hitTargetRow[0].children[lowerRowId];
-      hitElement.appendChild(img);
+  function marksOnPiramide(rowId, lowerRowId, sign, color) {
+    let hitTargetRow = document.querySelectorAll("[data-row='" + (7 - rowId) + "']");
+    let img = document.createElement("img");
+    img.classList.add('sign');
+    if (sign === 'neutral') {
+      img.src = "./img/" + sign + ".png";
+    } else {
+      img.src = "./img/" + color + sign + ".png";
     }
+    let hitElement = hitTargetRow[0].children[lowerRowId];
+    hitElement.appendChild(img);
+  }
 
-  //<-- TO DO --> make reusable function to mark drink result on piramide board
   button.addEventListener('click', function () {
-    marksOnPiramide(result[0], result[1], result[3],result[2]);
+    marksOnPiramide(result[0], result[1], result[3], result[2]);
     drinkPotionResult(result[2], result[3], result[4], result[1], 'data-elm', alchemonsMatrix)
     gameMemo.push(new testResult(result[2], result[3], result[4], result[1], result[0]));
     result[3] === 'neutral' ? neutralMemo.push(new testResult(result[2], result[3], result[4], result[1], result[0])) : null;
@@ -163,8 +162,7 @@
 
   clearButton.onclick = (e) => {
     localStorage.clear();
-    counter = 0; 
-    // e.target.classList.toggle('btn__piramide-active')
+    counter = 0;
   };
 
   loadFromLocalStorageButton.onclick = (e) => {
@@ -207,7 +205,7 @@
       }; // eliminates other options for selected ingridient - marks verticaly
       let allMarkedDataElm = document.querySelectorAll("[data-elm='" + target.dataset.elm + "']");
       for (let j = 0; j < allMarkedDataElm.length; j += 1) {
-        allMarkedDataElm[j].classList.toggle('minus');
+        allMarkedDataElm[j].classList.toggle('row');
       }
     }
   })
