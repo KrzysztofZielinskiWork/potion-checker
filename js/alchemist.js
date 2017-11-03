@@ -163,6 +163,7 @@
   clearButton.onclick = (e) => {
     localStorage.clear();
     counter = 0;
+    location.reload();
   };
 
   loadFromLocalStorageButton.onclick = (e) => {
