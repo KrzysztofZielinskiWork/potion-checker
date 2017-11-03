@@ -46,11 +46,12 @@
     alchemonsMatrix.push(new alchemon(red[i], green[i], blue[i], i))
   };
 
-  function testResult(color, sign, firstIngridient, secondIngridient) {
+  function testResult(color, sign, firstIngridient, secondIngridient, rowId) {
     this.firstIngridient = ingridientNames[firstIngridient];
     this.secondIngridient = ingridientNames[secondIngridient];
     this.sign = sign;
     this.color = color;
+    this.rowId = rowId;
   }
 
   // piramide board constructor
@@ -106,41 +107,43 @@
   let counter = localStorage.length;
 
   function addToStorage() {
-    localStorage.setItem('MixingCounter' + counter, ('color: ' + result[2] + ' sign: ' + result[3]) + ' first: ' + result[4] + ' second: ' + result[1]);
+    localStorage.setItem('MixingCounter' + counter, ('color: ' + result[2] + ' sign: ' + result[3]) + ' first: ' + result[4] + ' second: ' + result[1] + ' rowId: ' + result[0]);
     counter += 1;
   }
 
   // load game from local storage
-  // <-- TODO --> neutral watcher don't work on load
   function loadFromLocalStorage() {
     let arr = [];
     for (let i = 0; i < localStorage.length; i += 1) {
       arr.push(localStorage.getItem('MixingCounter' + i).split(' '));
       drinkPotionResult(arr[i][1], arr[i][3], arr[i][5], arr[i][7], 'data-elm', alchemonsMatrix);
+      arr[i][3] === 'neutral' ? neutralMemo.push(new testResult(arr[i][1], arr[i][3], arr[i][5], arr[i][7])) : null;
+      neutralWatcher();
+      marksOnPiramide(arr[i][9], arr[i][7], arr[i][3],arr[i][1])
     }
-    // add functon to mark result on piramide
-
   }
 
   let button = document.getElementById('confirm');
 
+    function marksOnPiramide(rowId, lowerRowId, sign, color) {
+      let hitTargetRow = document.querySelectorAll("[data-row='" + (7 - rowId) + "']");
+      let img = document.createElement("img");
+      img.classList.add('sign');
+      if (sign === 'neutral') {
+        img.src = "./img/" + sign + ".png";
+      } else {
+        img.src = "./img/" + color + sign + ".png";
+      }
+      let hitElement = hitTargetRow[0].children[lowerRowId];
+      hitElement.appendChild(img);
+    }
+
   //<-- TO DO --> make reusable function to mark drink result on piramide board
   button.addEventListener('click', function () {
-    let rowId = result[0];
-    let lowerRowId = result[1];
-    let hitTargetRow = document.querySelectorAll("[data-row='" + (7 - rowId) + "']");
-    let img = document.createElement("img");
-    img.classList.add('sign');
-    if (result[3] === 'neutral') {
-      img.src = "./img/" + result[3] + ".png";
-    } else {
-      img.src = "./img/" + result[2] + result[3] + ".png";
-    }
-    let hitElement = hitTargetRow[0].children[lowerRowId];
-    hitElement.appendChild(img);
+    marksOnPiramide(result[0], result[1], result[3],result[2]);
     drinkPotionResult(result[2], result[3], result[4], result[1], 'data-elm', alchemonsMatrix)
-    gameMemo.push(new testResult(result[2], result[3], result[4], result[1]));
-    result[3] === 'neutral' ? neutralMemo.push(new testResult(result[2], result[3], result[4], result[1])) : null;
+    gameMemo.push(new testResult(result[2], result[3], result[4], result[1], result[0]));
+    result[3] === 'neutral' ? neutralMemo.push(new testResult(result[2], result[3], result[4], result[1], result[0])) : null;
     neutralWatcher();
     addToStorage();
     result = [null, null, null, null, null];
