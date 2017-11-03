@@ -160,7 +160,7 @@
 
   clearButton.onclick = (e) => {
     localStorage.clear();
-    counter = 0;
+    counter = 0; 
     // e.target.classList.toggle('btn__piramide-active')
   };
 
