@@ -56,6 +56,14 @@ body {
   background-color: pink;
 }
 
+.answerDivBoard__element .big {
+  width: 2em;
+}
+
+.answerDivBoard__element img {
+  width: 1em;
+}
+
 .answerDivBoard .row {
   background-color: #fff;
 }

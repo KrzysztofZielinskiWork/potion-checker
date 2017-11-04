@@ -35,19 +35,21 @@
   let red = ['minus', 'plus', 'plus', 'minus', 'minus', 'plus', 'minus', 'plus'];
   let green = ['plus', 'minus', 'minus', 'plus', 'minus', 'plus', 'minus', 'plus'];
   let blue = ['minus', 'plus', 'minus', 'plus', 'plus', 'minus', 'minus', 'plus'];
+  let big = ['blue', 'blue', 'green', 'green', 'red', 'red', 'all', 'all']
   let ingridientNames = ['mushroom', 'plant', 'froog', 'foot', 'flower', 'root', 'scorpion', 'feather']
 
   let gameMemo = [];
   let neutralMemo = [];
   let alchemonsMatrix = [];
-  function alchemon(red, green, blue, id) {
+  function alchemon(red, green, blue, id, big) {
     this.id = id;
     this.red = red;
     this.green = green;
     this.blue = blue;
+    this.big = big;
   };
   for (let i = 0; i < red.length; i += 1) {
-    alchemonsMatrix.push(new alchemon(red[i], green[i], blue[i], i))
+    alchemonsMatrix.push(new alchemon(red[i], green[i], blue[i], i, big[i]))
   };
 
   function testResult(color, sign, firstIngridient, secondIngridient, rowId) {
@@ -139,14 +141,14 @@
       img.src = "./img/" + color + sign + ".png";
     }
     let hitElement = hitTargetRow[0].children[lowerRowId];
-    hitElement.children.length !== 0 ? null : 
-    hitElement.appendChild(img);
+    hitElement.children.length !== 0 ? null :
+      hitElement.appendChild(img);
   }
 
   button.addEventListener('click', function () {
     marksOnPiramide(result[0], result[1], result[3], result[2]);
     drinkPotionResult(result[2], result[3], result[4], result[1], 'data-elm', alchemonsMatrix)
-    gameMemo.push(new testResult(result[2], result[3], result[4], result[1], result[0]));
+    // gameMemo.push(new testResult(result[2], result[3], result[4], result[1], result[0]));
     result[3] === 'neutral' ? neutralMemo.push(new testResult(result[2], result[3], result[4], result[1], result[0])) : null;
     neutralWatcher();
     addToStorage();
@@ -173,10 +175,10 @@
 
   loadFromLocalStorageButton.onclick = (e) => {
     let activeClass = document.getElementsByClassName('active');
-   if (activeClass.length == 0) {
-    loadFromLocalStorage();
-    loadFromLocalStorageButton.disabled = true;
-   }
+    if (activeClass.length == 0) {
+      loadFromLocalStorage();
+      loadFromLocalStorageButton.disabled = true;
+    }
   };
 
   //answer board constructor
@@ -196,6 +198,18 @@
       imgR.src = "./img/red" + red[i] + ".png";
       imgG.src = "./img/green" + green[i] + ".png";
       imgB.src = "./img/blue" + blue[i] + ".png";
+      
+      if (big[i] === 'red') {
+        imgR.classList.add('big');
+      } else if (big[i] === 'green') {
+        imgG.classList.add('big');
+      } else if (big[i] === 'blue') {
+        imgB.classList.add('big')
+      } else {
+        imgR.classList.add('big');
+        imgG.classList.add('big');
+        imgB.classList.add('big')        
+      }
       field.appendChild(imgR);
       field.appendChild(imgG);
       field.appendChild(imgB);
