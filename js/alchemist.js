@@ -10,8 +10,8 @@
     button.id = color + '-' + sign;
     buttonGroup[0].appendChild(button);
     button.onclick = (e) => {
-      result[2] = color;
-      result[3] = sign;
+      result[0] = color;
+      result[1] = sign;
       e.target.classList.toggle('btn__piramide-active')
     };
   }
@@ -27,16 +27,15 @@
 
   }).then(data => {
     data.map(el => {
-      buttonMaker(el.sign, el.color, el.label
-      );
+      buttonMaker(el.sign, el.color, el.label);
     })
   });
 
   let red = ['minus', 'plus', 'plus', 'minus', 'minus', 'plus', 'minus', 'plus'];
   let green = ['plus', 'minus', 'minus', 'plus', 'minus', 'plus', 'minus', 'plus'];
   let blue = ['minus', 'plus', 'minus', 'plus', 'plus', 'minus', 'minus', 'plus'];
-  let big = ['blue', 'blue', 'green', 'green', 'red', 'red', 'all', 'all']
-  let ingridientNames = ['mushroom', 'plant', 'froog', 'foot', 'flower', 'root', 'scorpion', 'feather']
+  let big = ['blue', 'blue', 'green', 'green', 'red', 'red', 'all', 'all'];
+  let ingridientNames = ['mushroom', 'plant', 'froog', 'foot', 'flower', 'root', 'scorpion', 'feather'];
 
   let gameMemo = [];
   let neutralMemo = [];
@@ -52,12 +51,12 @@
     alchemonsMatrix.push(new alchemon(red[i], green[i], blue[i], i, big[i]))
   };
 
-  function testResult(color, sign, firstIngridient, secondIngridient, rowId) {
+  function testResult(color, sign, firstIngridient, secondIngridient, piramidRowIndex) {
     this.firstIngridient = ingridientNames[firstIngridient];
     this.secondIngridient = ingridientNames[secondIngridient];
     this.sign = sign;
     this.color = color;
-    this.rowId = rowId;
+    this.piramidRowIndex = piramidRowIndex;
   }
 
   // piramide board constructor
@@ -85,6 +84,7 @@
   };
 
   let result = []; // mixed potion sign => arr[hitRow,hitElement]
+  // [color(str),sign(str),firstIngridient(int),secondIngridient(int),piramideRowIndex(int)]
 
   let elm = document.querySelectorAll("[data-row='7']");
   elm[0].addEventListener('click', function (e) {
@@ -95,15 +95,15 @@
       e.target.classList.remove('piramid__elements-active');
     }
     if (active.length > 1) {
-      let rowId = active[0].dataset.id - active[1].dataset.id;
-      let higherId = active[0].dataset.id > active[1].dataset.id ? active[0].dataset.id : active[1].dataset.id;
-      result[4] = Number(higherId);
-      let lowerRowId = active[0].dataset.id < active[1].dataset.id ? active[0].dataset.id : active[1].dataset.id;
-      result[1] = Number(lowerRowId);
-      if (rowId < 0) {
-        result[0] = rowId * (-1);
-      } else if (rowId >= 0) {
-        result[0] = rowId;
+      let piramideRowId = active[0].dataset.id - active[1].dataset.id;
+      let ingridientWithHigherId = active[0].dataset.id > active[1].dataset.id ? active[0].dataset.id : active[1].dataset.id;
+      result[3] = Number(ingridientWithHigherId);
+      let ingridnietWithLowerId = active[0].dataset.id < active[1].dataset.id ? active[0].dataset.id : active[1].dataset.id;
+      result[2] = Number(ingridnietWithLowerId);
+      if (piramideRowId < 0) {
+        result[4] = piramideRowId * (-1);
+      } else if (piramideRowId >= 0) {
+        result[4] = piramideRowId;
       }
       return result;
     }
@@ -112,8 +112,8 @@
   // local storage entries counter
   let counter = localStorage.length;
 
-  function addToStorage() {
-    localStorage.setItem('MixingCounter' + counter, ('color: ' + result[2] + ' sign: ' + result[3]) + ' first: ' + result[4] + ' second: ' + result[1] + ' rowId: ' + result[0]);
+  function addToStorage(color, sign, firstIngridient, secondIngridient, piramideRowIndex) {
+    localStorage.setItem('MixingCounter' + counter, ('color: ' + color + ' sign: ' + sign + ' first: ' + firstIngridient + ' second: ' + secondIngridient + ' rowId: ' + piramideRowIndex));
     counter += 1;
   }
 
@@ -125,14 +125,14 @@
       drinkPotionResult(arr[i][1], arr[i][3], arr[i][5], arr[i][7], 'data-elm', alchemonsMatrix);
       arr[i][3] === 'neutral' ? neutralMemo.push(new testResult(arr[i][1], arr[i][3], arr[i][5], arr[i][7])) : null;
       neutralWatcher();
-      marksOnPiramide(arr[i][9], arr[i][7], arr[i][3], arr[i][1])
+      marksOnPiramide(arr[i][1], arr[i][3], arr[i][5], arr[i][9])
     }
   }
 
   let button = document.getElementById('confirm');
 
-  function marksOnPiramide(rowId, lowerRowId, sign, color) {
-    let hitTargetRow = document.querySelectorAll("[data-row='" + (7 - rowId) + "']");
+  function marksOnPiramide(color, sign, ingridnietWithLowerId, piramideRowIndex) {
+    let hitTargetRow = document.querySelectorAll("[data-row='" + (7 - piramideRowIndex) + "']");
     let img = document.createElement("img");
     img.classList.add('sign');
     if (sign === 'neutral') {
@@ -140,18 +140,37 @@
     } else {
       img.src = "./img/" + color + sign + ".png";
     }
-    let hitElement = hitTargetRow[0].children[lowerRowId];
+    let hitElement = hitTargetRow[0].children[ingridnietWithLowerId];
     hitElement.children.length !== 0 ? null :
       hitElement.appendChild(img);
   }
 
+  // function to validate answers
+  function validateAnswer(color, sign, firstIngridient, secondIngridient, piramideRowId) {
+    let arr = [];
+    let duplicate = 0;
+    for (let i = 0; i < localStorage.length; i += 1) {
+      arr.push(localStorage.getItem('MixingCounter' + i).split(' '));
+    }
+    arr.filter(el => {
+      if ((firstIngridient == el[5] && secondIngridient == el[7]) ||
+        (firstIngridient == el[7] && secondIngridient == el[5])) {
+        console.log('duplikat');
+        return duplicate += 1;
+      }
+    })
+    if (duplicate < 1) {
+      marksOnPiramide(result[0], result[1], result[2], result[4]);
+      drinkPotionResult(result[0], result[1], result[2], result[3], 'data-elm', alchemonsMatrix)
+      // gameMemo.push(new testResult(result[0], result[1], result[2], result[3, result[4]));
+      result[1] === 'neutral' ? neutralMemo.push(new testResult(result[0], result[1], result[2], result[3], result[4])) : null;
+      neutralWatcher();
+      addToStorage(color, sign, firstIngridient, secondIngridient, piramideRowId)
+    }
+  }
+
   button.addEventListener('click', function () {
-    marksOnPiramide(result[0], result[1], result[3], result[2]);
-    drinkPotionResult(result[2], result[3], result[4], result[1], 'data-elm', alchemonsMatrix)
-    // gameMemo.push(new testResult(result[2], result[3], result[4], result[1], result[0]));
-    result[3] === 'neutral' ? neutralMemo.push(new testResult(result[2], result[3], result[4], result[1], result[0])) : null;
-    neutralWatcher();
-    addToStorage();
+    validateAnswer(result[0], result[1], result[2], result[3], result[4]);
     result = [null, null, null, null, null];
     classNameRemover('btn__piramide-active');
     classNameRemover('piramid__elements-active');
@@ -198,7 +217,7 @@
       imgR.src = "./img/red" + red[i] + ".png";
       imgG.src = "./img/green" + green[i] + ".png";
       imgB.src = "./img/blue" + blue[i] + ".png";
-      
+
       if (big[i] === 'red') {
         imgR.classList.add('big');
       } else if (big[i] === 'green') {
@@ -208,7 +227,7 @@
       } else {
         imgR.classList.add('big');
         imgG.classList.add('big');
-        imgB.classList.add('big')        
+        imgB.classList.add('big')
       }
       field.appendChild(imgR);
       field.appendChild(imgG);
